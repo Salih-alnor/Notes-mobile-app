@@ -2,7 +2,7 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
+  ActivityIndicator,
   TextInput,
   Alert,
   TouchableOpacity,
@@ -24,6 +24,7 @@ const Register = () => {
   const [last_name, setLast_name] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false)
 
 
 
@@ -34,6 +35,7 @@ const Register = () => {
     password,
   ) => {
     try {
+      setIsLoading(true)
       const userCredentials = await createUserWithEmailAndPassword(
         auth,
         email,
@@ -47,9 +49,11 @@ const Register = () => {
         email: user.email,
         createdAt: new Date(),
       });
+      setIsLoading(false)
       navigation.replace('login')
       console.log("User signed and data is saved in firestore");
     } catch (error) {
+      setIsLoading(false)
       Alert.alert("Error", error.message);
     }
   };
@@ -109,15 +113,23 @@ const Register = () => {
           handleSignUp(first_name, last_name, email, password)
         }
       >
-        <Text
-          style={{
-            color: COLORS.dark.text,
-            fontWeight: "bold",
-            fontSize: 18,
-          }}
-        >
-          Sign Up
-        </Text>
+       {isLoading ? (
+                 <ActivityIndicator
+                   size="small"
+                   color={COLORS.dark.text}
+                   animating={isLoading}
+                 />
+               ) : (
+                 <Text
+                   style={{
+                     color: "white",
+                     fontWeight: "bold",
+                     fontSize: 18,
+                   }}
+                 >
+                   Sign Up
+                 </Text>
+               )}
       </TouchableOpacity>
 
       <View

@@ -2,10 +2,10 @@ import {
   StyleSheet,
   Text,
   View,
-
   TextInput,
   Alert,
   TouchableOpacity,
+  ActivityIndicator
 } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "expo-router";
@@ -20,9 +20,11 @@ const Login = () => {
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleLogin = async () => {
     try {
+      setIsLoading(true);
       const userCredentials = await signInWithEmailAndPassword(
         auth,
         email,
@@ -33,27 +35,34 @@ const Login = () => {
       const userDoc = doc(db, "users", user.uid);
       const userInfo = await getDoc(userDoc);
       if (userInfo.exists()) {
-        const user = userInfo.data()
+        setIsLoading(false);
+        const user = userInfo.data();
         navigation.replace("home", {
-          user
+          user,
         });
+        
       } else {
         console.log("no data in db");
       }
     } catch (error) {
       Alert.alert("Error", error.message);
+      setIsLoading(false);
     }
   };
 
   return (
     <View style={styles.container}>
       <StatusBar style="dark" />
-      <Text style={{
-              fontSize: 30,
-              fontWeight: "bold",
-              color: COLORS.light.text,
-              marginBottom: 30,
-            }}>Login</Text>
+      <Text
+        style={{
+          fontSize: 30,
+          fontWeight: "bold",
+          color: COLORS.light.text,
+          marginBottom: 30,
+        }}
+      >
+        Login
+      </Text>
       <TextInput
         onChangeText={setEmail}
         style={styles.input}
@@ -82,45 +91,53 @@ const Login = () => {
         }}
         onPress={handleLogin}
       >
-        <Text
-          style={{
-            color: "white",
-            fontWeight: "bold",
-            fontSize: 18,
-          }}
-        >
-          Login
-        </Text>
+        {isLoading ? (
+          <ActivityIndicator
+            size="small"
+            color={COLORS.dark.text}
+            animating={isLoading}
+          />
+        ) : (
+          <Text
+            style={{
+              color: "white",
+              fontWeight: "bold",
+              fontSize: 18,
+            }}
+          >
+            Login
+          </Text>
+        )}
       </TouchableOpacity>
 
       <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "center",
+          marginTop: 10,
+        }}
+      >
+        <Text
           style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            marginTop: 10,
+            fontSize: 14,
+            color: COLORS.GRAY,
           }}
         >
+          Don't have an account?
+        </Text>
+        <TouchableOpacity onPress={() => navigation.replace("register")}>
           <Text
             style={{
               fontSize: 14,
-              color: COLORS.GRAY,
+              fontWeight: "500",
+              color: COLORS.light.tabIconSelected,
             }}
           >
-            Don't have an account?
+            {"  "}
+            Sign Up!
           </Text>
-          <TouchableOpacity onPress={() => navigation.replace("register")}>
-            <Text
-              style={{
-                fontSize: 14,
-                fontWeight: "500",
-                color: COLORS.light.tabIconSelected,
-              }}
-            >
-              {"  "}
-              Sign Up!
-            </Text>
-          </TouchableOpacity>
-        </View>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
