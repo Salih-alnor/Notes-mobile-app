@@ -10,25 +10,23 @@ import { auth, db } from "../config/Firebase";
 import { doc, getDoc } from "firebase/firestore";
 
 const Splash = () => {
-   const navigation = useNavigation();
+  const navigation = useNavigation();
   const [loading, setLoading] = useState(true);
 
-
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async(user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-      const userDocRef = doc(db, "users", user.uid);
-      const userDoc = await getDoc(userDocRef);
-      if (userDoc.exists()) {
-        const user = userDoc.data()
-         navigation.replace("home", {
-          user
-        });
-      } else {
-        console.log("No user document found.");
-        navigation.navigate("register");
-      }
-       
+        const userDocRef = doc(db, "users", user.uid);
+        const userDoc = await getDoc(userDocRef);
+        if (userDoc.exists()) {
+          const user = userDoc.data();
+          navigation.replace("home", {
+            user,
+          });
+        } else {
+          console.log("No user document found.");
+          navigation.navigate("register");
+        }
       } else {
         navigation.replace("login");
       }

@@ -5,6 +5,7 @@ import Login from "../../screens/auth/Login";
 import Register from "../../screens/auth/Register";
 import Home from "../../screens/Home";
 import { createStackNavigator } from "@react-navigation/stack";
+import AddNote from "../../screens/AddNote";
 
 const Stack = createStackNavigator();
 
@@ -17,6 +18,7 @@ const StackComponent = () => {
       <Stack.Screen name="login" component={Login} />
       <Stack.Screen name="register" component={Register} />
       <Stack.Screen name="home" component={Home} />
+      <Stack.Screen name="add-note" component={AddNote} />
     </Stack.Navigator>
   );
 };
