@@ -15,6 +15,7 @@ import { auth, db } from "../../config/Firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 import { doc, getDoc } from "firebase/firestore";
+import StatusBarComp from "../../components/StatusBar.jsx";
 
 const Login = () => {
   const navigation = useNavigation();
@@ -52,12 +53,12 @@ const Login = () => {
 
   return (
     <View style={styles.container}>
-      <StatusBar style="dark" />
+      <StatusBarComp style="light" background={COLORS.dark.background} />
       <Text
         style={{
           fontSize: 30,
           fontWeight: "bold",
-          color: COLORS.light.text,
+          color: COLORS.dark.text,
           marginBottom: 30,
         }}
       >
@@ -82,7 +83,7 @@ const Login = () => {
         style={{
           width: "90%",
           height: 60,
-          backgroundColor: COLORS.dark.background,
+          backgroundColor: COLORS.light.tabIconSelected,
           justifyContent: "center",
           alignItems: "center",
           borderRadius: 10,
@@ -120,7 +121,7 @@ const Login = () => {
         <Text
           style={{
             fontSize: 14,
-            color: COLORS.GRAY,
+            color: COLORS.dark.text,
           }}
         >
           Don't have an account?
@@ -149,7 +150,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: COLORS.light.background,
+    backgroundColor: COLORS.dark.background,
   },
 
   input: {
