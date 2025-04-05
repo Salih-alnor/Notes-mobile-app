@@ -3,8 +3,11 @@ import React from "react";
 import search from "../../assets/icons/search.png";
 import info from "../../assets/icons/info.png";
 import { COLORS } from "../../constants/Colors";
+import { useNavigation } from "expo-router";
 
 const Header = () => {
+
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <View>
@@ -23,7 +26,7 @@ const Header = () => {
           <Image source={search} resizeMode="contain" style={styles.icon} />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.iconWrapper}>
+        <TouchableOpacity style={styles.iconWrapper} onPress={() => navigation.replace('info')}>
           <Image source={info} resizeMode="contain" style={styles.icon} />
         </TouchableOpacity>
       </View>

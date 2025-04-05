@@ -6,6 +6,7 @@ import Register from "../../screens/auth/Register";
 import Home from "../../screens/Home";
 import { createStackNavigator } from "@react-navigation/stack";
 import AddNote from "../../screens/AddNote";
+import Info from "../../screens/Info";
 
 const Stack = createStackNavigator();
 
@@ -19,6 +20,7 @@ const StackComponent = () => {
       <Stack.Screen name="register" component={Register} />
       <Stack.Screen name="home" component={Home} />
       <Stack.Screen name="add-note" component={AddNote} />
+      <Stack.Screen name="info" component={Info} />
     </Stack.Navigator>
   );
 };

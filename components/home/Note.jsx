@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useEffect, useState } from "react";
 
-const Note = () => {
+const Note = ({note}) => {
   const [color, setColor] = useState(null);
 
   const getRandomColor = () => {
@@ -19,6 +19,7 @@ const Note = () => {
   }, []);
   return (
     <TouchableOpacity
+   
       style={[
         styles.noteContainer,
         {
@@ -27,7 +28,7 @@ const Note = () => {
       ]}
     >
       <Text style={styles.noteTitle}>
-        Book Review : The Design of Everyday Things by Don Norman
+        {note.title}
       </Text>
     </TouchableOpacity>
   );

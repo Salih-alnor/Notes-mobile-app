@@ -1,32 +1,48 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, Alert, StyleSheet, TouchableOpacity } from "react-native";
-import { signOut } from "firebase/auth";
-import { auth } from "../config/Firebase";
-import { useNavigation } from "@react-navigation/native";
-import { StatusBar } from "expo-status-bar";
+import { signOut, getAuth } from "firebase/auth";
+import { auth, db } from "../config/Firebase";
 import { COLORS } from "../constants/Colors";
 import StatusBarComp from "../components/StatusBar";
 import Header from "../components/home/Header";
 import Notes from "../components/home/Notes";
 import AddNote from "../components/home/AddNote";
+import { collection, getDocs, orderBy, query} from "firebase/firestore";
 
-const Home = ({ route }) => {
-  const navigation = useNavigation();
+const Home = () => {
+  const [notes, setNotes] = useState([]);
 
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      navigation.replace("login");
-    } catch (error) {
-      Alert.alert("Error", error.message);
+  const Auth = getAuth();
+
+  const fetchNotes = async () => {
+    const user = Auth.currentUser;
+    if (!user) {
+      Alert.alert("Error", "Please sign in to access your notes.");
+      return;
     }
+    // fetch notes from Firestore
+    try {
+      const notesRef = collection(db, "users", user.uid, "notes");
+      const q = query(notesRef, orderBy("createdAt", "desc"))
+      const notesSnapShot = await getDocs(q);
+      const notes = notesSnapShot.docs.map(doc => ({id: doc.id, ...doc.data()}));
+    // set notes state with the fetched data
+      setNotes(notes);
+    } catch (error) {
+      Alert.error(error.message);
+    }
+
   };
+
+  useEffect(() => {
+    fetchNotes();
+  }, []);
 
   return (
     <View style={styles.container}>
-      <StatusBarComp style="dark" background={COLORS.light.background} />
+      <StatusBarComp style="light" background={COLORS.dark.background} />
       <Header />
-      <Notes />
+      <Notes notes={notes} />
       <AddNote />
     </View>
   );
@@ -35,7 +51,7 @@ const Home = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.light.background,
+    backgroundColor: COLORS.dark.background,
     paddingHorizontal: 25,
   },
   text: {

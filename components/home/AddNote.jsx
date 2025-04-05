@@ -13,8 +13,8 @@ const AddNote = () => {
       <Image
         resizeMode="contain"
         style={{
-          width: 30,
-          height: 30,
+          width: 25,
+          height: 25,
           tintColor: "#666",
         }}
         source={plus}
@@ -27,8 +27,8 @@ export default AddNote;
 
 const styles = StyleSheet.create({
   addNoteBtn: {
-    width: 70,
-    height: 70,
+    width: 60,
+    height: 60,
     backgroundColor: "#EEE",
     borderRadius: 35,
     justifyContent: "center",
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     position: "absolute",
     bottom: 20,
-    right: 25,
+    left: 25,
     zIndex: 999,
   },
 });
