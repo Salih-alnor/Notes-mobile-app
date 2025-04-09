@@ -15,7 +15,7 @@ const Header = () => {
           style={{
             fontWeight: "500",
             fontSize: 40,
-            color: COLORS.light.text,
+            color: COLORS.dark.text,
           }}
         >
           Notes

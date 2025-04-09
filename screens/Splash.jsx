@@ -52,6 +52,7 @@ const Splash = () => {
           <View
             style={{
               height: 50,
+              marginTop: 16
             }}
           >
             <ActivityIndicator

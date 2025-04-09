@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.dark.background,
-    paddingHorizontal: 25,
+    paddingHorizontal: 16,
   },
   text: {
     fontSize: 20,

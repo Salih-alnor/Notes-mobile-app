@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     position: "absolute",
     bottom: 20,
-    left: 25,
+    left: 16,
     zIndex: 999,
   },
 });
