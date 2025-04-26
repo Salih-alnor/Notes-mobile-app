@@ -58,7 +58,7 @@ const Register = () => {
         style={{
           fontSize: 30,
           fontWeight: "bold",
-          color: COLORS.light.text,
+          color: COLORS.dark.text,
           marginBottom: 30,
         }}
       >
